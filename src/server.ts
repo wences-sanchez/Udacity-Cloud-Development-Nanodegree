@@ -73,14 +73,14 @@ import { Car, cars as cars_list } from './cars';
   // Add an endpoint to GET a list of cars
   // it should be filterable by make with a query paramater
   app.get( "/cars/", (req: Request, res: Response ) => {
-    let { index } = req.query;
+    const { index } = req.query;
 
-    let processed_index = Number(index);
-    if ( processed_index >= 0 || processed_index < cars.length ) {
-      return res.status(200).send(cars[processed_index]);
+    const processedIndex = Number(index);
+    if ( processedIndex >= 0 || processedIndex < cars.length ) {
+      return res.status(200).send(cars[processedIndex]);
     }
 
-    res.status(200).send(`Este es el final. Y el index fue el ${processed_index}`);
+    res.status(200).send(`Este es el final. Y el index fue el ${processedIndex}`);
   } );
 
   // @TODO Add an endpoint to get a specific car

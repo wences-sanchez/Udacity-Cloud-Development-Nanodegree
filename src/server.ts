@@ -7,25 +7,25 @@ import { Car, cars as cars_list } from './cars';
 (async () => {
   let cars:Car[]  = cars_list;
 
-  //Create an express application
-  const app = express(); 
-  //default port to listen
-  const port = 8082; 
-  
-  //use middleware so post bodies 
-  //are accessable as req.body.{{variable}}
-  app.use(bodyParser.json()); 
-  app.use(express.urlencoded({ extended: true })) //for requests from forms-like data
+  // Create an express application
+  const app = express();
+  // default port to listen
+  const port = 8082;
+
+  // use middleware so post bodies
+  // are accessible as req.body.{{variable}}
+  app.use(bodyParser.json());
+  app.use(express.urlencoded({ extended: true })); // for requests from forms-like data
 
   // Root URI call
   app.get( "/", ( req: Request, res: Response ) => {
     res.status(200).send("Welcome to the Cloud!");
   } );
 
-  // Get a greeting to a specific person 
+  // Get a greeting to a specific person
   // to demonstrate routing parameters
   // > try it {{host}}/persons/:the_name
-  app.get( "/persons/:name", 
+  app.get( "/persons/:name",
     ( req: Request, res: Response ) => {
       let { name } = req.params;
 
@@ -54,9 +54,9 @@ import { Car, cars as cars_list } from './cars';
 
   // Post a greeting to a specific person
   // to demonstrate req.body
-  // > try it by posting {"name": "the_name" } as 
+  // > try it by posting {"name": "the_name" } as
   // an application/json body to {{host}}/persons
-  app.post( "/persons", 
+  app.post( "/persons",
     async ( req: Request, res: Response ) => {
 
       const { name } = req.body;
@@ -70,10 +70,17 @@ import { Car, cars as cars_list } from './cars';
                 .send(`Welcome to the Cloud, ${name}!`);
   } );
 
-  // @TODO Add an endpoint to GET a list of cars
+  // Add an endpoint to GET a list of cars
   // it should be filterable by make with a query paramater
   app.get( "/cars/", (req: Request, res: Response ) => {
-    res.status(200).send(cars);
+    let { index } = req.query;
+
+    let processed_index = Number(index);
+    if ( processed_index >= 0 || processed_index < cars.length ) {
+      return res.status(200).send(cars[processed_index]);
+    }
+
+    res.status(200).send(`Este es el final. Y el index fue el ${processed_index}`);
   } );
 
   // @TODO Add an endpoint to get a specific car

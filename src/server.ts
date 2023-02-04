@@ -72,7 +72,7 @@ import { Car, cars as cars_list } from './cars';
 
   // Add an endpoint to GET a list of cars
   // it should be filterable by make with a query paramater
-  app.get( "/cars/", (req: Request, res: Response ) => {
+  app.get( "/cars", (req: Request, res: Response ) => {
     const { index } = req.query;
 
     const processedIndex = Number(index);
@@ -80,12 +80,27 @@ import { Car, cars as cars_list } from './cars';
       return res.status(200).send(cars[processedIndex]);
     }
 
-    res.status(200).send(`Este es el final. Y el index fue el ${processedIndex}`);
+    res.status(200).send(cars);
   } );
 
   // @TODO Add an endpoint to get a specific car
   // it should require id
   // it should fail gracefully if no matching car is found
+  app.get( "/cars/:id", (req: Request, res: Response) => {
+    var id = req.params.id;
+    if ( !id ) {
+        return res.status(400).send(`id no está`);
+    } else {
+        // if ( id ) {
+        //     cars.forEach(function (car) {
+        //         if (+id == car.id) { return res.status(200).send(car); }
+        //     });
+        // }
+        return res.status(400).send(`id no está`);
+    }
+  } );
+
+
 
   /// @TODO Add an endpoint to post a new car to our list
   // it should require id, type, model, and cost

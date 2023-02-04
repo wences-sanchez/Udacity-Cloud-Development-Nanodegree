@@ -107,7 +107,7 @@ import { Car, cars as cars_list } from "./cars";
             return res.status(400).send(`car is required`);
         }
         cars.push({ make, type, model, cost, id });
-        return res.status(200).send(cars);
+        return res.status(201).send(cars);
     } );
 
     // Start the Server
